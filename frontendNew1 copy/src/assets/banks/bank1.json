@@ -1,0 +1,23 @@
+[
+	{
+		"pan_number": "pan1",
+        "fy_year": 2018,
+        "amount": 1000
+    },
+    {
+		"pan_number": "pan2",
+        "fy_year": 2018,
+        "amount": 1200
+    },
+    {
+		"pan_number": "pan3",
+        "fy_year": 2018,
+        "amount": 900
+    },
+    {
+		"pan_number": "pan1",
+        "fy_year": 2018,
+        "amount": 1200
+    }
+	
+]

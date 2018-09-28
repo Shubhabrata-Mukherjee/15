@@ -1,0 +1,23 @@
+<div class="main-content" style="margin-top: 8%;">
+    <div *ngIf="flgShowBankItems" class="container-fluid">
+        <div class="row col-md-6">
+            <div class="card centerDivInternal">
+                <div class="card-body" style="text-align: center">
+                    
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" name="pan26as1" maxlength="10" placeholder="Enter PAN" [(ngModel)]="pan_number_26AS1" required>
+                        </mat-form-field>
+                       <div>
+                            <input type="file" ng-style=center (change)="onFileChange($event)">
+                       </div>
+                                
+                       
+                   
+                    <br />
+                    <button class="btn btn-warning btn-round" (click)="getdocument1();">Submit</button>
+                    <div *ngIf="loader" class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

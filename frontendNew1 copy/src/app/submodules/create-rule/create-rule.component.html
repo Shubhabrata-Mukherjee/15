@@ -1,0 +1,56 @@
+<div class="main-content" style="margin-top: -3%;">
+  <div class="container-fluid">
+    <div class="row col-md-6">
+
+      <div class="card centerDivInternal">
+        <div class="card-body">
+          <form>
+
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Tax Type" matInput required [(ngModel)]="Tax_type" name="tax_type">
+                <mat-option value="INTEREST">Interest Income</mat-option>
+                <mat-option value="NET">Taxable Income</mat-option>
+                <mat-option value="DEDUCTION">Deduction</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Gender Type" matInput required [(ngModel)]="Gender_type" name="gender_type">
+                <mat-option value="M">Male</mat-option>
+                <mat-option value="F">Female</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Year_type" placeholder="Year" required [(ngModel)]="Year_type">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Age_senior" placeholder="Senior Citizen Age >=" required [(ngModel)]="Age_senior">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Age_supersenior" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Super Senior Citizen Age >=" required [(ngModel)]="Age_supersenior">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Amount_general" placeholder="Tax Waiver Limit For General Citizen" required [(ngModel)]="Amount_general">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Amount_senior" placeholder="Tax Waiver Limit For Senior Citizen" required [(ngModel)]="Amount_senior">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput name="Amount_supersenior" placeholder="Tax Waiver Limit For Super Senior Citizen" required [(ngModel)]="Amount_supersenior">
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" class="btn btn-warning btn-round" (click)="updateRules();">Submit</button>
+            <!-- <div class="clearfix"></div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

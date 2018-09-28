@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="nav navbar-nav navbar-text" style="font-size:25px; color:white; padding-left: 270px">WELCOME TO LOGIN</div>
+        <div class="nav navbar-nav navbar-right navbar-text">
+			<!-- <button  type="button" class="btn btn-default btn-primary" (click)="gotologin()">
+            <span class="glyphicon glyphicon-log-in"></span> Log in
+		  </button> -->
+		</div>
+    </div>
+</nav>
+
+
+
+
+<div class="container container-styles">
+			<div class="panel panel-primary"  style="background-color:rgb(235, 235, 235)">
+				<div class="panel-body padding">
+					<form class="form-horizontal" #loginForm="ngForm" style="text-align:center; padding: 20px ">
+
+						<!-- <div class="form-group">
+								<label for="user_type" class="control-label"></label>
+								<div style="text-align:center ">
+										<select style="text-align:center " >
+												<option value="" disabled selected >User Type</option>
+												<option value="volvo" ></option>Volvo</option>
+												<option value="saab" >Saab</option>
+											
+											  </select>
+								</div>
+
+
+						</div> -->
+						<div class="form-group " style ="text-align: center" >
+							<div class="glyphicon glyphicon-envelope" style="padding: 15px; font-size: 30px"></div><br>
+							<label for="name" class="control-label"></label>
+							<div style="text-align:center ">
+								<input type="text" class="form-control" name="username" [(ngModel)]="login.userName" #username="ngModel" required placeholder="Username">
+								<div *ngIf="username.touched && !username.valid" style="color:red">UserName is required</div>
+							</div>
+						</div>
+						<div class="form-group">
+								<div class="glyphicon glyphicon-lock" style="padding: 15px; font-size: 30px "></div><br>
+							<label for="password" class="control-label"></label>
+							<div style="text-align:center  ">
+								<input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="login.password" required placeholder="Password">
+								<div *ngIf="password.touched && !password.valid" style="color:red">Password is required</div>
+							</div>
+						</div>
+	
+						<div *ngIf="!valid" class="error">Invalid Credentials...Please try again...</div>
+						<br />
+	
+						<div class="form-group">
+							<div style="text-align:center; font-size: 25px">
+								<button (click)="onSubmit()" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login</button>
+							</div>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br><br>
+
+
+
+		<footer class="page-footer blue " style="position:fixed; background-color: black; width: 100%; left: 0; bottom: 0">
+			<div class="footer-copyright text-center py-3" style="color: white">© 2018 Copyright:
+			  <a href="https://mdbootstrap.com/bootstrap-tutorial/"> infosys.com</a>
+			</div>
+		  
+		  </footer>

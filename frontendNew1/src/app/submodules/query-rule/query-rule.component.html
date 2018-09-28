@@ -1,0 +1,64 @@
+<div class="main-content" style="margin-top: -3%;">
+  <div class="container-fluid">
+    <div class="row col-md-6">
+
+      <div class="card centerDivInternal">
+        <div class="card-body">
+          <form>
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Tax Type" matInput [(ngModel)]="Tax_type_query" name="Tax_type_query">
+                <mat-option value="INTEREST">Interest Income</mat-option>
+                <mat-option value="NET">Taxable Income</mat-option>
+                <mat-option value="DEDUCTION">Deduction</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Gender Type" matInput [(ngModel)]="Gender_type_query" name="Gender_type_query">
+                <mat-option value="M">Male</mat-option>
+                <mat-option value="F">Female</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input matInput name="Year_type_query" placeholder="Year" [(ngModel)]="Year_type_query">
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" class="btn btn-warning btn-round" (click)="getRules();show_1=true;">Submit</button>
+            <!-- <div class="clearfix"></div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12" *ngIf="show_1">      
+      <div class="card">
+        <div class="card-body">
+          <div class="row" style="padding-top:40px;text-align:center">
+            <table class="table x2  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+              <tr>
+                <th>Year</th>
+                <th>Tax Type</th>
+                <th>Gender</th>
+                <th>Tax Waiver Limit(General)</th>
+                <th>Age(Senior)</th>
+                <th>Tax Waiver Limit(Senior)</th>
+                <th>Age(Super Senior)</th>
+                <th>Tax Waiver Limit(Super Senior)</th>
+              </tr>
+              <tr *ngFor="let x of arr">
+                <td>{{x.RULE_YEAR}}</td>
+                <td>{{x.RULE_INCOME}}</td>
+                <td>{{x.GENDER}}</td>
+                <td>{{x.AMOUNT_GENERAL}}</td>
+                <td>{{x.AGE_SENIOR}}</td>
+                <td>{{x.AMOUNT_SENIOR}}</td>
+                <td>{{x.AGE_SUPER_SENIOR}}</td>
+                <td>{{x.AMOUNT_SUPER_SENIOR}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

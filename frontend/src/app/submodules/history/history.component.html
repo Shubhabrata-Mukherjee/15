@@ -1,0 +1,47 @@
+<div class="main-content" style="margin-top: -3%;">
+    <div class="container">
+      <div class="row col-md-6">
+  
+        <div class="card centerDivInternal">
+          <div class="card-body">
+            <form>
+  
+            
+  
+              <mat-form-field class="example-full-width">
+                <input type="text" matInput name="pan26as" placeholder="Pan Number" required [(ngModel)]="pan26as">
+              </mat-form-field>
+  
+              
+  
+              <button mat-raised-button type="submit" class="btn btn-warning btn-round" (click)="getdocumentHistory()">Submit</button>
+              <!-- <div class="clearfix"></div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="query_26" class ="wrapper"> 
+          <!-- class="table table-striped table-hover" -->
+          <table class="table table-striped table-hover"  style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+              
+              <tr>
+                <th>Transaction Id</th>
+                <th>Status</th>
+                <th>Hash of 26AS Document</th>
+                <th>Date</th>
+                
+              
+              </tr>
+              <tr *ngFor ="let element of txarray">
+                <td class="last" style="text-align: left;">{{element.TXID}} </td>
+                <td class="last" style="text-align: left;">{{element.STATUS}}</td>
+                <td class="last" style="text-align: left;">{{element.HASH}}</td>
+                <td class="last" style="text-align: left;">{{element.DATE}}</td>
+              </tr>    
+            </table>
+      </div>
+  
+    </div>
+  </div>

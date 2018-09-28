@@ -1,0 +1,42 @@
+<div class="main-content" style="margin-top: -3%;">
+  <div class="container-fluid">
+    <div class="row col-md-6">
+      <div class="card centerDivInternal">
+        <div class="card-body">
+          <div>
+              <div *ngIf="isLoaderVisible" class="loader"></div>
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" maxlength="10" placeholder="Enter PAN" [(ngModel)]="strPanDetails" required>
+            </mat-form-field>
+          </div>
+          <br />
+         
+              <button (click)="fetchUserPANDetails()" class="btn btn-warning btn-round">Fetch</button>
+                  
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12" *ngIf="flgShowRecords">
+        <div class="card">
+          <div class="card-body">            
+            <div  class="row" style="padding-top:40px;text-align:center">
+              <table class="table x2  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+                <tr>
+                  <th>Deductee PAN</th>
+                  <th>Full Name</th>
+                  <th>Gender</th>
+                  <th>Date Of Birth</th>
+                </tr>
+                <tr *ngFor="let detail of arrPANDetails">
+                  <td style="text-align: center;">{{detail.pan_number}}</td>
+                  <td style="text-align: center;">{{detail.name}}</td>
+                  <td style="text-align: center">{{detail.gender}}</td>
+                  <td style="text-align: center">{{detail.dob}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

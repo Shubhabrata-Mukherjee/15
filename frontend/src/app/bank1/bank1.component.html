@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+  <header>
+    <div class="container-fluid">
+      <!-- <div class="row">
+            <div class="col-sm-4" style="margin-top: 20px ;padding: 15px;padding-bottom :1px">
+                <img src="assets/itd_logo.jpg" alt="logo" style="width:100px;height:100%;">
+    
+            </div>
+            <div class="col-sm-4" >
+                <h3 style="text-align:center;padding-top:10px;padding-bottom: -10px; margin-bottom:0px ;margin-top: 30px">E-Filing User</h3>
+            </div>
+            <div class="col-sm-4" style="text-align: right ;  ">
+                
+                    <button class="button btn-primary" style = "border-radius: 5px;width:30% ;margin-top: 70px " (click)="log_out()">LogOut</button>
+            </div>
+            
+            
+    
+        </div> -->
+    </div>
+  </header>
+  <div class="row" style="border-radius: 5px;margin-top:-15px">
+    <div class="col-sm-4" style="margin-top: 20px ;padding: 15px;padding-bottom :1px">
+      <!-- <img src="assets/itd_logo.jpg" alt="logo" style="width:100px;height:100%;"> -->
+
+    </div>
+    <div class="col-sm-4">
+      <h3 style="text-align:center;padding-top:10px;padding-bottom: -10px; margin-bottom:0px ;margin-top: 30px">BANK 1</h3>
+    </div>
+    <div class="col-sm-4" style="text-align: right ;  ">
+
+      <button class="button btn btn-warning" style="border-radius: 5px;width:30% ;margin-top: 35px " (click)="log_out()">LogOut</button>
+    </div>
+
+
+
+  </div>
+  <div class="form-group" style="padding-left:20px;padding-right:20px;padding-top: 5px">
+
+    <div class="btn-group btn-group-justified">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-lg btn-warning " (click)="f1()">26 AS</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-lg btn-warning " (click)="show_RS()">15 G/H</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-lg btn-warning ">Challans</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-lg btn-warning ">197 Certificates</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-lg btn-warning ">ITR</button>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  For 26 AS
+-->
+  <!-- <div class="row" style="padding-left:500px;text-align:center;border: collapse" >
+    
+  <div *ngIf="temp1" class="c1">
+  
+    <div class="container"> 
+      <form >
+         <b>PAN Number</b>
+        <input type="text" class="form-control" [(ngModel)]="pan_number_26AS1" name="pan">
+          <input type="file" (change)="onFileChange($event)">
+          <button type="submit"(click)="getdocument1()">Submit</button>
+       </form>
+    </div>
+    </div>
+
+</div> -->
+  <!-- //////////// -->
+  <br>
+  <br>
+  <br>
+  <div *ngIf="temp1">
+    <div class="row">
+
+      <div class="col-sm-8 col-sm-offset-4">
+        <span>
+          <b>
+            <font size="4">PAN NUMBER:</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+        </span>
+        <input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_number_26AS1">
+        <br>
+        <br>
+        <input type="file" ng-style=center (change)="onFileChange($event)">
+        <br>
+        <br>
+
+        <div class="row">
+          <div class="col-sm-1"></div>
+
+          <div class="col-sm-4">
+            <button class="button btn btn-warning btn-md " style="border-radius: 5px;width:100%;" (click)="getdocument1();">
+              <font size="4"> Submit</font>
+            </button>
+
+            <div *ngIf="loader" class="loader"></div>
+          </div>
+          <!-- Modal -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--*************** Add 15 G/H and Search button  ***************-->
+
+  <div class="container">
+
+
+
+    <div class="row" style="padding-top:20px;text-align:center;border: collapse;">
+
+
+
+      <div class="form-group" *ngIf="GH_flag">
+
+        <div class="btn-group btn-group-justified">
+          <div class="btn-group">
+            <button type="submit" class="btn btn-lg btn-warning" (click)="show_Details()">Fetch PAN Details</button>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-lg btn-warning" (click)="show_Rule()">Add 15 G/H</button>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-lg btn-warning " (click)="show_Search()">Search</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!--*************** Submit 15G/H  ***************-->
+
+    <div *ngIf="CR_flag">
+
+      <div class="row" style="padding-top:40px;padding-left:36%;">
+        <table class="table" style="text-align:left;">
+          <th>
+            <tr>
+              <td></td>
+            </tr>
+          </th>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">Deductee PAN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+              <input type="text" placeholder="XXXXXXXXXX"
+                [(ngModel)]="pan">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">Assessment Year:&nbsp;&nbsp;&nbsp;&nbsp;</font>
+              <input type="text" placeholder="Year" [(ngModel)]="year">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">Interest Amount:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+              <input type="text" placeholder="Interest Amount"
+                [(ngModel)]="i_amount">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">Other Amount:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+              <input type="text" placeholder="Other Amount"
+                [(ngModel)]="o_amount">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">Deduction Amount:&nbsp;&nbsp;</font>
+              <input type="text" placeholder="Deduction Amount" [(ngModel)]="d_amount">
+            </td>
+          </tr>
+          <div style="padding-left:15%;">
+            <br>
+            <button class="button btn btn-warning btn-md" style="border-radius: 5px;width:15%;" (click)="Update_15G()">
+              <font size="4">Submit</font>
+            </button>
+          </div>
+        </table>
+      </div>
+
+      <!-- <div class="row" style="padding-top:40px;text-align:center">
+                <table class="table  x2  table-striped table-hover" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+                  <tr>
+                    <th>Deductee PAN</th>
+                    <th>Assessment Year</th>
+                    <th>15 G/H ID</th>
+                    <th>Amount</th>
+                    <th>Data Timestamp</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr></tr>    
+                </table>
+              </div> -->
+
+    </div>
+
+
+    <!--*************** Fetch Pan button  ***************-->
+
+    <div *ngIf="V_flag">
+      <div class="row" style="padding-top:40px;text-align:center">
+        <table class="table">
+          <th>
+            <tr>
+              <td></td>
+            </tr>
+          </th>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">PAN:</font> &nbsp;
+              <input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_det">
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <button class="button btn btn-warning btn-md" style="border-radius: 5px;width:10%;" (click)="getUser_Detail()">
+                <font size="4">Submit</font>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="T_V_flag" class="row" style="padding-top:40px;text-align:center">
+      <table class="table x2  table-striped table-hover" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+        <tr>
+          <th>Deductee PAN</th>
+          <th>Full Name</th>
+          <th>Gender</th>
+          <th>Date Of Birth</th>
+        </tr>
+        <tr *ngFor="let detail of details">
+          <td style="text-align: center;">{{detail.pan_number}}</td>
+          <td style="text-align: center;">{{detail.name}}</td>
+          <td style="text-align: center">{{detail.gender}}</td>
+          <td style="text-align: center">{{detail.dob}}</td>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <!--*************** Search button  ***************-->
+
+    <div *ngIf="S_flag">
+      <div class="row" style="padding-top:40px;text-align:center">
+        <table class="table">
+          <th>
+            <tr>
+              <td></td>
+            </tr>
+          </th>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">PAN:&nbsp;&nbsp;</font> &nbsp;
+              <input type="text" placeholder="XXXXXXXXXX" #pan_number1 [(ngModel)]="show_pan_number">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <font size="4" style="font-weight: bold">YEAR:</font> &nbsp;&nbsp;
+              <input type="text" placeholder="Select Assessment year" #fy_year1 [(ngModel)]="show_fy_year">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="button btn btn-warning btn-md" style="border-radius: 5px;width:10%;" (click)="viewTransaction(pan_number1.value,fy_year1.value);show_3=true;getHistory();getCumulative();">
+                <font size="4">Submit</font>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div *ngIf="show_3" class="row" style="padding-top:40px;text-align:center">
+        <table class="table x2  table-striped table-hover" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+          <tr>
+            <th>Deductee PAN</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Interest Income</th>
+            <th>Other Income</th>
+            <th>Deductions</th>
+            <th>Taxable Income</th>
+          </tr>
+          <tr (click)="show_t=true">
+            <td style="text-align: center;"> {{tempTax[0].pan_number}}</td>
+            <td style="text-align: center;"> {{details[0].name}}</td>
+            <td style="text-align: center;"> {{details[0].gender}}</td>
+
+            <td style="text-align: center">{{tempTax[0].interest_amount}}</td>
+            <td style="text-align: center">{{tempTax[0].other_amount}}</td>
+            <td style="text-align: center">{{tempTax[0].deduction_amount}}</td>
+            <td style="text-align: center">{{tempTax[0].total_amount}}</td>
+
+            <!--*********************link to transaction history******************* -->
+
+            <!-- <td style="text-align: center;background-color: blue;color:white;"(click)="show_TransactionHistory()">e</td> -->
+          </tr>
+        </table>
+      </div>
+
+      <div class="row" style="padding-top:40px;text-align:center" *ngIf="show_t">
+        <table class="table table-striped table-hover" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+          <tr>
+            <th>Deductor TAN</th>
+            <th>Timestamp</th>
+            <th>Interest Income</th>
+            <th>Other Income</th>
+            <th>Deductions</th>
+            <th>Taxable Income</th>
+          </tr>
+          <tr *ngFor="let element of lt">
+            <!-- <td style="text-align: left;">{{element[1].Value[0].PAN_NUMBER}}</td> -->
+            <td style="text-align: left;">{{element[0]}}</td>
+            <!-- <td style="text-align: left;">{{element[1].Value[0].YEAR}}</td> -->
+            <td style="text-align: left;">{{element[1].Timestamp}}</td>
+            <td style="text-align: left;">{{element[1].Value[0].INTEREST_AMOUNT}}</td>
+            <td style="text-align: left;">{{element[1].Value[0].OTHER_AMOUNT}}</td>
+            <td style="text-align: left;">{{element[1].Value[0].DEDUCTION_AMOUNT}}</td>
+            <td style="text-align: left;"></td>
+          </tr>
+
+          <tr style="background-color:#337AB7">
+            <td colspan="2">
+              <font color="white">Cumulative Income </font>
+            </td>
+            <td style="text-align: left;">
+              <font color="white">{{cumulative_interest}} </font>
+            </td>
+            <td style="text-align: left;">
+              <font color="white">{{cumulative_other}}</font>
+            </td>
+            <td style="text-align: left;">
+              <font color="white">{{cumulative_deduction}}</font>
+            </td>
+            <td style="text-align: left;">
+              <font color="white">{{cumulative_net}}</font>
+            </td>
+
+          </tr>
+
+        </table>
+      </div>
+
+    </div>
+
+
+
+    <!--*********************** for Transaction Histrory*********************************** -->
+    <!-- <div class="row" style="padding-top:40px;text-align:center" *ngIf="T_flag">
+              <table class="table ">
+                <tr>
+                  <th>Deductee PAN</th>
+                  <th>Deductor TAN</th>
+                  <th>Assessment Year</th>
+                  <th>15 G/H ID</th>
+                  <th>Amount</th>
+                  <th>Date Timestamp</th>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>y</td>
+                  <td>z</td>
+                  <td>w</td>
+                  <td>y</td>
+                  <td>l</td>
+                </tr>    
+
+                <tr>
+                    <td>x</td>
+                    <td>y</td>
+                    <td>z</td>
+                    <td>w</td>
+                    <td>y</td>
+                    <td>l</td>
+                  </tr> 
+
+                  <tr>
+                      <td>x</td>
+                      <td>y</td>
+                      <td>z</td>
+                      <td>w</td>
+                      <td>y</td>
+                      <td>l</td>
+                    </tr> 
+
+                    <tr>
+                        <td>x</td>
+                        <td>y</td>
+                        <td>z</td>
+                        <td>w</td>
+                        <td>y</td>
+                        <td>l</td>
+                      </tr> 
+              </table>
+            </div> -->
+
+
+
+  </div>
+
+
+
+  <!-- <select name="profile" [(ngModel)]="user.profile" required #profile="ngModel" (change)="onProfileChange()">
+    <option [ngValue]="null" disabled>Choose your profile</option>
+    <option *ngFor="let prf of allProfiles" [ngValue]="prf">
+      {{ prf.prName }}
+    </option>
+ </select> -->
+
+
+
+
+
+</body>
+
+
+</html>

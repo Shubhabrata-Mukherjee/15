@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+
+<div class="main-content">
+	<div class="container-fluid">
+			<div class="card centerDiv">
+				<div class="card-header card-header-warning" style="text-align: center">
+					<h2 class="card-title">User Login</h2>
+				</div>
+				<div class="card-body">
+					<form class="form-horizontal" #loginForm="ngForm">
+						<div>
+							<div>
+								<mat-form-field class="example-full-width">
+									<input matInput placeholder="Username" name="username" [(ngModel)]="login.userName" #username="ngModel" required>
+								</mat-form-field>
+							</div>
+						</div>
+						<div>
+							<div>
+								<mat-form-field class="example-full-width">
+									<input matInput type="password" name="password" #password="ngModel" [(ngModel)]="login.password" required placeholder="Password">
+								</mat-form-field>
+							</div>
+						</div>
+						<div *ngIf="!valid" class="error" style="font-size: 15pt;">Invalid Credentials...Please try again...</div>
+
+						<br />
+						<div class="form-group">
+							<div style="text-align:center;">
+								<button (click)="onSubmit()" class="btn btn-warning btn-round" [disabled]="!loginForm.form.valid">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		
+
+	</div>
+</div>
+
+<br>
+<br>
+
+
+
+<footer class="blue customFooter" style="position:fixed; background-color: black; width: 100%; left: 0; bottom: 0">
+	<div style="text-align: center">
+		<span style="color: white">Copyright © 2018 Infosys Limited</span>
+	</div>
+
+</footer>

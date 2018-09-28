@@ -1,0 +1,210 @@
+<div class="main-content" style="margin-top: -3%;">
+  <div *ngIf="flgShowBankItems" class="container-fluid">
+    <div class="row col-md-6">
+      <div class="card centerDivInternal">
+        <div class="card-body">
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" maxlength="10" placeholder="Enter PAN" #pan_number1 [(ngModel)]="show_pan_number" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" maxlength="10" #fy_year1 placeholder="Select Assessment Year" [(ngModel)]="show_fy_year">
+            </mat-form-field>
+          </div>
+          <br />
+
+          <button class="btn btn-warning btn-round" (click)="viewTransactionBank(pan_number1.value,fy_year1.value);show_3=true;getHistoryBank();getCumulativeBank();">Search</button>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="show_3" class="row" style="padding-top:40px;text-align:center">
+      <table class="table x2  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+        <tr>
+          <th>Deductee PAN</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Interest Income</th>
+          <th>Other Income</th>
+          <th>Deductions</th>
+          <th>Taxable Income</th>
+        </tr>
+        <tr (click)="show_t=true">
+          <td style="text-align: center;"> {{tempTax[0].pan_number}}</td>
+          <td style="text-align: center;"> {{details[0].name}}</td>
+          <td style="text-align: center;"> {{details[0].gender}}</td>
+
+          <td style="text-align: center">{{tempTax[0].interest_amount}}</td>
+          <td style="text-align: center">{{tempTax[0].other_amount}}</td>
+          <td style="text-align: center">{{tempTax[0].deduction_amount}}</td>
+          <td style="text-align: center">{{tempTax[0].total_amount}}</td>
+
+          <!--*********************link to transaction history******************* -->
+
+          <!-- <td style="text-align: center;background-color: blue;color:white;"(click)="show_TransactionHistory()">e</td> -->
+        </tr>
+      </table>
+    </div>
+    <div class="row" *ngIf="show_t">
+      <div class="card">
+        <div class="card-body">
+          <div class="row" style="padding-top:40px;text-align:center">
+            <table class="table x2 table-bordered  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+              <tr>
+                <th>Deductor TAN</th>
+                <th>Timestamp</th>
+                <th>Interest Income</th>
+                <th>Other Income</th>
+                <th>Deductions</th>
+                <th>Taxable Income</th>
+              </tr>
+              <tr *ngFor="let element of lt">
+                <td style="text-align: center;">{{element[0]}}</td>
+                <td style="text-align: center;">{{element[1].Timestamp}}</td>
+                <td style="text-align: center;">{{element[1].Value[0].INTEREST_AMOUNT}}</td>
+                <td style="text-align: center;">{{element[1].Value[0].OTHER_AMOUNT}}</td>
+                <td style="text-align: center;">{{element[1].Value[0].DEDUCTION_AMOUNT}}</td>
+                <td style="text-align: center;"></td>
+              </tr>
+
+              <tr style="background-color:#337AB7">
+                <td colspan="2">
+                  <font color="white">Cumulative Income </font>
+                </td>
+                <td style="text-align: center;">
+                  <font color="white">{{cumulative_interest}} </font>
+                </td>
+                <td style="text-align: center;">
+                  <font color="white">{{cumulative_other}}</font>
+                </td>
+                <td style="text-align: center;">
+                  <font color="white">{{cumulative_deduction}}</font>
+                </td>
+                <td style="text-align: center;">
+                  <font color="white">{{cumulative_net}}</font>
+                </td>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="flgShowITDItems" class="container-fluid">
+      <div class="row col-md-6">
+        <div class="card centerDivInternal">
+          <div class="card-body">
+            <div>
+              <mat-form-field class="example-full-width">
+                <input matInput type="text" maxlength="10" placeholder="Deductee PAN" [(ngModel)]="pan_number" required>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput type="text" maxlength="10" placeholder="Assessment Year" [(ngModel)]="fy_year">
+              </mat-form-field>
+            </div>
+            <br />
+  
+            <button class="btn btn-warning btn-round" (click)="getHistoryITD();getCumulativeITD();show_2=true;">Search</button>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="show_2" class="row" style="padding-top:40px;text-align:center">
+        <table class="table x2  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+          <tr>
+            <th>Deductee PAN</th>
+            <th>Assessment Year</th>
+            <th>Interest Income</th>
+            <th>Other Income</th>
+            <th>Deductions</th>
+            <th>Taxable Income</th>
+          
+          </tr>
+          <tr (click)="show_t=true;">
+            <td style="text-align: left;">{{pan_number}} </td>
+            <td style="text-align: left;">{{fy_year}}</td>
+
+               <!--*********************link to transaction history******************* -->
+
+            <td style="text-align: left;">{{cumulative_interest}}</td>
+            <td style="text-align: left;">{{cumulative_other}}</td>
+            <td style="text-align: left;">{{cumulative_deduction}}</td>
+            <td style="text-align: left;">{{cumulative_net}}</td>
+
+            
+          </tr>    
+        </table>
+      </div>
+      <div class="row col-md-12" *ngIf="show_t">
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="padding-top:40px;text-align:center">
+              <table class="table x2  table-striped" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+                <tr>
+                    <th>Deductee PAN</th>
+                    <th>Assessment Year</th>
+                    <th>Interest Income</th>
+                    <th>Other Income</th>
+                    <th>Deductions</th>
+                    <th>Taxable Income</th>
+                </tr>
+                <tr (click)="T_flag=true">
+                    <td style="text-align: left;">{{pan_number}} </td>
+                    <td style="text-align: left;">{{fy_year}}</td>
+
+                       <!--*********************link to transaction history******************* -->
+
+                    <td style="text-align: left;">{{cumulative_interest}}</td>
+                    <td style="text-align: left;">{{cumulative_other}}</td>
+                    <td style="text-align: left;">{{cumulative_deduction}}</td>
+                    <td style="text-align: left;">{{cumulative_net}}</td>
+
+                    
+                  </tr> 
+                
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="padding-top:40px;text-align:center" *ngIf="T_flag">
+
+          <table class="table table-striped table-hover" style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+            <tr>
+              <th>Deductor TAN</th>
+              <th>Valid</th>
+              <th>Timestamp</th>
+              <th>Interest Income</th>
+              <th>Other Income</th>
+              <th>Deductions</th>
+              <th>Taxable Income</th>
+            </tr>
+            <tr *ngFor="let element of lt">
+              <!-- <td style="text-align: left;">{{element[1].Value[0].PAN_NUMBER}}</td> -->
+              <td style="text-align: left;">{{element[0]}}</td>
+              <!-- <td style="text-align: left;">{{element[1].Value[0].YEAR}}</td> -->
+              <td style="text-align: left;">{{element[1].Value[0].VALID}}</td>
+              <td style="text-align: left;">{{element[1].Timestamp}}</td>
+              <td style="text-align: left;">{{element[1].Value[0].INTEREST_AMOUNT}}</td>
+              <td style="text-align: left;">{{element[1].Value[0].OTHER_AMOUNT}}</td>
+              <td style="text-align: left;">{{element[1].Value[0].DEDUCTION_AMOUNT}}</td>
+              <td style="text-align: left;"></td>
+            </tr>   
+            
+            <tr style = "background-color:#337AB7">
+                <td colspan="2"><font color="white">Cumulative Income </font></td>
+                <td></td>
+                <td style="text-align: left;"> <font color="white">{{cumulative_interest}} </font></td>
+                <td style="text-align: left;"><font color="white">{{cumulative_other}}</font></td>
+                <td style="text-align: left;"><font color="white">{{cumulative_deduction}} </font></td>
+                <td style="text-align: left;"><font color="white">{{cumulative_net}}</font></td>
+
+            </tr>
+
+          </table>
+        </div>
+    </div>
+</div>

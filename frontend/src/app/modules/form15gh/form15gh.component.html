@@ -1,0 +1,90 @@
+<div class="main-content">
+    <div *ngIf="flgShowBankItems" class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadFetchPANDetails();">
+                    <div class="card-header" [ngClass]="flgLoadFetchPANDetails ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Fetch PAN details</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to fetch PAN details </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadAddForm15GH();">
+                    <div class="card-header" [ngClass]="flgLoadAddForm15GH ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Add 15 G/H</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to add form 15 G/H details </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadSearchPAN();">
+                    <div class="card-header" [ngClass]="flgLoadSearchPAN ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Search PAN details</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to search PAN details </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center">
+            <div class="col-md-12">
+                <app-fetch-pan-details *ngIf="flgLoadFetchPANDetails"></app-fetch-pan-details>
+                <app-add-form15gh *ngIf="flgLoadAddForm15GH"></app-add-form15gh>
+                <app-search-pan *ngIf="flgLoadSearchPAN"></app-search-pan>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="flgShowITDItems" class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadCreateRule();">
+                    <div class="card-header" [ngClass]="flgCreateRulePAN ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Create Rule</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to create a new rule </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadQueryRule();">
+                    <div class="card-header" [ngClass]="flgQueryRule ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Query Rule</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to query rule </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart" (click)="loadSearchPANITD();">
+                    <div class="card-header" [ngClass]="flgLoadSearchPANITD ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Search PAN details</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to search PAN details </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center">
+            <div class="col-md-12">
+                <app-create-rule *ngIf="flgCreateRulePAN"></app-create-rule>
+                <app-query-rule *ngIf="flgQueryRule"></app-query-rule>
+                <app-search-pan *ngIf="flgLoadSearchPANITD"></app-search-pan>
+            </div>
+        </div>
+    </div>
+</div>

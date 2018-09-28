@@ -1,0 +1,41 @@
+<div class="main-content" style="margin-top: -3%;">
+  <div class="container-fluid">
+    <div class="row col-md-6">
+
+      <div class="card centerDivInternal">
+        <div class="card-body">
+          <form>
+
+            <div *ngIf="isLoaderVisible" class="loader"></div>
+            <mat-form-field class="example-full-width">
+              <input matInput name="pan" placeholder="Deductee PAN" required [(ngModel)]="pan">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input matInput name="assessment_year" [(ngModel)]="year" required placeholder="Choose an year">
+              <!-- <input matInput name="assessment_year" placeholder="Assessment Year" required [(ngModel)]="year"> -->
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input matInput name="i_amount" placeholder="Interest Amount" required [(ngModel)]="i_amount">
+            </mat-form-field>
+
+
+            <mat-form-field class="example-full-width">
+              <input matInput name="o_amount" placeholder="Other Amount" required [(ngModel)]="o_amount">
+            </mat-form-field>
+
+
+            <mat-form-field class="example-full-width">
+              <input matInput name="d_amount" placeholder="Deduction Amount" required [(ngModel)]="d_amount">
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" class="btn btn-warning btn-round" (click)="Update_15G()">Add Details</button>
+            <!-- <div class="clearfix"></div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

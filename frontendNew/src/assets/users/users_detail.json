@@ -1,0 +1,20 @@
+[
+	{
+		"pan_number": "pan1",
+        "dob": "01-01-1980",
+        "gender":"M",
+        "Age":38
+	},
+	{
+		"pan_number": "pan2",
+        "dob": "01-01-1990",
+        "gender":"F",
+        "Age":28
+	},
+	{
+		"pan_number": "pan10",
+        "dob": "01-01-1985",
+        "gender":"T",
+        "Age":33
+	}
+]

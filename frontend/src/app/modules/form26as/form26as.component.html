@@ -1,0 +1,195 @@
+<div class="main-content" style="margin-top: 8%;">
+    <div *ngIf="flgShowBankItems" class="container-fluid">
+        <div class="row col-md-6">
+            <div class="card centerDivInternal">
+                <div class="card-body" style="text-align: center">
+                    
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" name="pan26as1" maxlength="10" placeholder="Enter PAN" [(ngModel)]="pan_number_26AS1" required>
+                        </mat-form-field>
+                       <div>
+                            <input type="file" ng-style=center (change)="onFileChange($event)">
+                       </div>
+                                
+                       
+                   
+                    <br />
+                    <button class="btn btn-warning btn-round" (click)="getdocument1();">Submit</button>
+                    <div *ngIf="loader" class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="flgShowITDItems" class="container-fluid">
+
+
+
+  <!-- <div class="form-group">
+  
+        <div class="btn-group btn-group-justified">
+          <div class="btn-group">
+            <button type="submit" class="btn btn-lg btn-primary" (click)="create_Hash()">Download 26AS</button>
+          </div>
+          <div class="btn-group">
+              <button type="submit"  class="btn btn-lg btn-primary " (click)="show_History()">Get History</button>
+          </div>
+          
+        </div>
+      
+      </div>
+      
+      <div >
+
+ 
+    
+       
+      
+      </div> -->
+
+
+      <div class="row">
+            <div class="col-md-6">
+                <div class="card card-chart" (click)="Download();">
+                    <div class="card-header" [ngClass]="flgCreateRulePAN ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Download 26AS</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to Download 26AS </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-chart" (click)="History();">
+                    <div class="card-header" [ngClass]="flgQueryRule ? 'card-header-danger' : 'card-header-warning' ">
+                        <h3 class="card-title">Get History</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">
+                            Click here to Get History </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="text-align: center">
+                <div class="col-md-12">
+                    <app-download26as *ngIf="flgCreateRulePAN"></app-download26as>
+                    <app-history *ngIf="flgQueryRule"></app-history>
+                </div>
+            </div>
+
+
+
+
+
+
+
+ 
+  
+  
+
+       <!--
+  For 26 AS
+  
+-->
+<!-- <br>
+<br>
+<br>
+   <div *ngIf="temp" >
+    <div class="row">
+
+        <div class="col-sm-8 col-sm-offset-4"> -->
+    <!--        <table>
+              <th><tr><td></td></tr></th>
+              <tr>
+                
+                <td><span ><b><font size="4">PAN NUMBER</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span><input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_number_26AS"></td></tr>
+              
+              <th><tr><td></td></tr></th>
+              <br><tr><td><button class="button btn-primary " style = "border-radius: 5px" (click)="getdocument();"><font size="4">Submit</font></button></td></tr>
+            </table>-->
+            <!-- <span ><b><font size="4">PAN NUMBER</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span><input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_number_26AS">  
+            <br>
+            <br>
+            <br>
+            
+            <div class="row">
+              <div class="loader"></div>
+
+              <div class="col-sm-1"></div>
+              
+              <div class="col-sm-4">
+                    <button type="button" class="button btn-primary btn-md"   style = "border-radius: 5px;width:100%;" (click)="getdocument();"><font size="4"> Submit</font></button>
+                    <div *ngIf="loader" class="loader"></div> -->
+              <!-- </div> --> 
+              <!-- popup -->
+              
+               
+  
+          <!-- </div>
+          </div>
+        </div>
+        </div>
+       
+
+        <div *ngIf="t1" >
+            <div class="row">
+        
+                <div class="col-sm-8 col-sm-offset-4"> -->
+            <!--        <table>
+                      <th><tr><td></td></tr></th>
+                      <tr>
+                        
+                        <td><span ><b><font size="4">PAN NUMBER</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span><input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_number_26AS"></td></tr>
+                      
+                      <th><tr><td></td></tr></th>
+                      <br><tr><td><button class="button btn-primary " style = "border-radius: 5px" (click)="getdocument();"><font size="4">Submit</font></button></td></tr>
+                    </table>-->
+                    <!-- <span ><b><font size="4">PAN NUMBER</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span><input type="text" placeholder="XXXXXXXXXX" [(ngModel)]="pan_number_26AS">  
+                    <br>
+                    <br>
+                    <br>
+                    
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-4">
+                    <button class="button btn-primary btn-md" style = "border-radius: 5px;width:100%;"(click)="getdocumentHistory();query_26=true;"><font size="4">Submit</font></button>
+                    <div *ngIf="loader1" class="loader"></div>
+                  </div>
+                  </div>
+
+                  
+                  </div>
+                </div>
+                </div>
+                <br>
+                <br>
+                <div *ngIf="query_26" class ="wrapper">  -->
+                    <!-- class="table table-striped table-hover" -->
+                    <!-- <table class="table table-striped table-hover"  style="background-color:rgb(160, 184, 187); border:2px; border-radius: 10px;">
+                        
+                        <tr>
+                          <th>Transaction Id</th>
+                          <th>Status</th>
+                          <th>Hash of 26AS Document</th>
+                          <th>Date</th>
+                          
+                        
+                        </tr>
+                        <tr *ngFor ="let element of txarray">
+                          <td class="last" style="text-align: left;">{{element.TXID}} </td>
+                          <td class="last" style="text-align: left;">{{element.STATUS}}</td>
+                          <td class="last" style="text-align: left;">{{element.HASH}}</td>
+                          <td class="last" style="text-align: left;">{{element.DATE}}</td>
+                        </tr>    
+                      </table> -->
+                <!-- </div> -->
+
+
+    </div>
+
+
+</div>

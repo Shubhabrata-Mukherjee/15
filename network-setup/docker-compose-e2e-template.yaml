@@ -1,0 +1,420 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  byfn:
+  
+services:
+  mongodb-pan-users:
+    image: 'mongo:latest'
+    # user: 'root'
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27027:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/pan      
+      - MONGODB_DATABASE=panstore
+
+    volumes:
+
+      - './pandb:/data/pan' 
+    container_name: mongodb-pan-users
+        
+    networks:
+      - byfn 
+
+  mongodb-org-users:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27017:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/org            
+      - MONGODB_DATABASE=userstore
+      
+    volumes:
+      - /var/run/:/host/var/run/    
+      - './userdb:/data/org'   
+    container_name: mongodb-org-users
+        
+    networks:
+      - byfn
+ 
+  mongodb-pan-document-26AS:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27007:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/doc            
+      - MONGODB_DATABASE=docstore
+      
+    volumes:
+
+      - './docdb:/data/doc'   
+    container_name: mongodb-pan-document-26AS
+        
+    networks:
+      - byfn
+
+  mongodb-pan-document-197:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27037:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/doc197            
+      - MONGODB_DATABASE=doc197store
+      
+    volumes:
+
+      - './doc197db:/data/doc197'   
+    container_name: mongodb-pan-document-197
+        
+    networks:
+      - byfn 
+
+
+      
+      
+  ca0:
+    image: hyperledger/fabric-ca:x86_64-1.1.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org1
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4c7c25f423c9b09f13d18ea149496d2c79b2576c7b63b194cf3bf03cebcfd459_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/4c7c25f423c9b09f13d18ea149496d2c79b2576c7b63b194cf3bf03cebcfd459_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg1
+    networks:
+      - byfn
+
+  ca1:
+    image: hyperledger/fabric-ca:x86_64-1.1.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org2
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/7b9622b0d759fd5d1a920bb83eb851b2ada7e42e73f5d2bb010657f738064f25_sk
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/7b9622b0d759fd5d1a920bb83eb851b2ada7e42e73f5d2bb010657f738064f25_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg2
+    networks:
+      - byfn
+
+  ca2:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org4
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org4.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/3c5056f48570ce7b0274a3ff12126963ab5526820aa1d8f7c73b51fa7fcea215_sk
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org4.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3c5056f48570ce7b0274a3ff12126963ab5526820aa1d8f7c73b51fa7fcea215_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/org4.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg4
+    networks:
+      - byfn  
+
+  ca3:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org5
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org5.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/b044d5167d8c8dc92905fdfdae0d529467795e24eba0b656b637b94893549b63_sk
+      - "10054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org5.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/b044d5167d8c8dc92905fdfdae0d529467795e24eba0b656b637b94893549b63_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/org5.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg5
+    networks:
+      - byfn     
+
+  orderer.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: orderer.example.com
+    container_name: orderer.example.com
+    networks:
+      - byfn
+
+  peer0.org1.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org1.example.com
+    container_name: peer0.org1.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer1.org1.example.com:
+    container_name: peer1.org1.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org1.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer0.org2.example.com:
+    container_name: peer0.org2.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org2.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer1.org2.example.com:
+    container_name: peer1.org2.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org2.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer0.org4.example.com:
+    container_name: peer0.org4.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org4.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer1.org4.example.com:
+    container_name: peer1.org4.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org4.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn 
+
+  peer0.org5.example.com:
+    container_name: peer0.org5.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org5.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer1.org5.example.com:
+    container_name: peer1.org5.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org5.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn       
+
+  peer0.orderer.example.com:
+    container_name: peer0.orderer.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.orderer.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  peer1.orderer.example.com:
+    container_name: peer1.orderer.example.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.orderer.example.com
+    depends_on:
+      - orderer.example.com
+    networks:
+      - byfn
+
+  cli1:
+    container_name: cli1
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ID=cli1
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.example.com
+      - peer0.org1.example.com
+      - peer1.org1.example.com
+    networks:
+      - byfn
+
+  cli2:
+    container_name: cli2
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ID=cli2
+      - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.example.com
+      - peer0.org2.example.com
+      - peer1.org2.example.com
+    networks:
+      - byfn
+
+
+
+  cli3:
+    container_name: cli3
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ID=cli3
+      - CORE_PEER_ADDRESS=peer0.orderer.example.com:7051
+      - CORE_PEER_LOCALMSPID=OrdererOrgMSP
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orderer.example.com/peers/peer0.orderer.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orderer.example.com/peers/peer0.orderer.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orderer.example.com/peers/peer0.orderer.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orderer.example.com/users/Admin@orderer.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.example.com
+      - peer0.orderer.example.com
+      - peer1.orderer.example.com
+    networks:
+      - byfn
+
+  cli4:
+    container_name: cli4
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ID=cli4
+      - CORE_PEER_ADDRESS=peer0.org4.example.com:7051
+      - CORE_PEER_LOCALMSPID=Org4MSP
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/users/Admin@org4.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.example.com
+      - peer0.org4.example.com
+      - peer1.org4.example.com
+    networks:
+      - byfn  
+
+  cli5:
+    container_name: cli5
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ID=cli5
+      - CORE_PEER_ADDRESS=peer0.org5.example.com:7051
+      - CORE_PEER_LOCALMSPID=Org5MSP
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/peers/peer0.org5.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/peers/peer0.org5.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/peers/peer0.org5.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/users/Admin@org5.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash -c 'sleep 6000000'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.example.com
+      - peer0.org5.example.com
+      - peer1.org5.example.com
+    networks:
+      - byfn      

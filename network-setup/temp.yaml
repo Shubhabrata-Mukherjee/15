@@ -1,0 +1,91 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  byfn:
+  
+services:
+  mongodb-pan-users:
+    image: 'mongo:latest'
+    # user: 'root'
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27027:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/pan      
+      - MONGODB_DATABASE=panstore
+
+    volumes:
+
+      - './pandb:/data/pan' 
+    container_name: mongodb-pan-users
+        
+    networks:
+      - byfn 
+
+  mongodb-org-users:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27017:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/org            
+      - MONGODB_DATABASE=userstore
+      
+    volumes:
+      - /var/run/:/host/var/run/    
+      - './userdb:/data/org'   
+    container_name: mongodb-org-users
+        
+    networks:
+      - byfn
+ 
+  mongodb-pan-document-26AS:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27007:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/doc            
+      - MONGODB_DATABASE=docstore
+      
+    volumes:
+
+      - './docdb:/data/doc'   
+    container_name: mongodb-pan-document-26AS
+        
+    networks:
+      - byfn
+
+  mongodb-pan-document-197:
+    image: 'mongo:latest'
+    # user: 'root'    
+    command: mongod --smallfiles --port 27017
+    ports:
+    - "27037:27017"
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGO_DATA_DIR=/data/doc197            
+      - MONGODB_DATABASE=doc197store
+      
+    volumes:
+
+      - './doc197db:/data/doc197'   
+    container_name: mongodb-pan-document-197
+        
+    networks:
+      - byfn 
+
